@@ -1,5 +1,6 @@
 package com.example.fbuinsta;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 //if there are no errors in the log in process
                 if(e == null) {
                     Log.d(TAG, "Login successful");
+
+                    //Lead the user to the HomeActivity
+                    Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(i);
+
+                    //Close this activity
+                    finish();
                 }
 
                 else {
