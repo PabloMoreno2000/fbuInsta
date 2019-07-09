@@ -18,11 +18,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 
 import java.io.File;
@@ -38,6 +40,8 @@ public class HomeActivity extends AppCompatActivity {
 
     //Elements of the view
     private Button bCreate;
+    private Button bPublish;
+    private EditText etDescription;
     private ImageView ivTest;
 
     private Uri imageUri;
@@ -56,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
 
         //Initializing elements of the view
         bCreate = (Button) findViewById(R.id.bCreate);
+        bPublish = (Button) findViewById(R.id.bPublish);
+        etDescription = (EditText) findViewById(R.id.etDescription);
 
         //Listeners
         bCreate.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +81,22 @@ public class HomeActivity extends AppCompatActivity {
                     onLaunchCamera(v);
 
                 }
+            }
+        });
+
+        bPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Post post = new Post();
+
+                String description = etDescription.getText().toString();
+                File photoFile = getPhotoFileUri(photoFileName);
+                ParseFile parseFile = new ParseFile(photoFile);
+
+                post.setDescription(description);
+                post.setImage(parseFile);
+
+
             }
         });
 
