@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 login(username, password);
             }
         });
+
+        etUsername.setText("username1");
+        etPassword.setText("password1");
     }
 
     private void login(String username, String password) {
