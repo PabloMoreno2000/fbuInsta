@@ -116,16 +116,6 @@ public class HomeActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Inform the user
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-
-                /**
-                //start the intent
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File photo= new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-                imageUri = Uri.fromFile(photo);
-
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                **/
             }
 
             //if the permission was denied
@@ -140,26 +130,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/**
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            //Bitmap photo = (Bitmap) data.getExtras().get("data");
-            Uri selectedImage = imageUri;
-            getContentResolver().notifyChange(selectedImage, null);
-            ContentResolver cr = getContentResolver();
-            Bitmap photo;
 
-            try {
-                photo = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
-                ivTest.setImageBitmap(photo);
-                Toast.makeText(this, selectedImage.toString(), Toast.LENGTH_LONG).show();
-
-            } catch (Exception e) {
-                Toast.makeText(this, "Failed to load", Toast.LENGTH_LONG).show();
-                Log.e("Camera", e.toString());
-            }
-
-        }
-        **/
 
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {

@@ -2,4 +2,6 @@
     <string name="app_name">fbuInsta</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="btnCreate">Create</string>
+    <string name="logIn">Sign in</string>
+    <string name="signUp">Sign up</string>
 </resources>

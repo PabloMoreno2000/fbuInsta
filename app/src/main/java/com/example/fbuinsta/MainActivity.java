@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button bLogin;
+    private Button bSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
-
+        bSignUp = (Button) findViewById(R.id.bSingUp);
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +43,71 @@ public class MainActivity extends AppCompatActivity {
                 login(username, password);
             }
         });
+
+        bSignUp.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                //Getting the text
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+
+
+                if(etUsername.equals("") && etPassword.equals("")) {
+                    //display toast
+                    Toast.makeText(MainActivity.this, "Please create user and password", Toast.LENGTH_LONG).show();
+                }
+
+                else if(etPassword.equals("")) {
+                    //display toast
+                    Toast.makeText(MainActivity.this, "Please create a password", Toast.LENGTH_LONG).show();
+                }
+
+                else if(etUsername.equals("")) {
+                    //display toast
+                    Toast.makeText(MainActivity.this, "Please create a username", Toast.LENGTH_LONG).show();
+
+                }
+
+                //else, everything is fine
+                else {
+                    //Create new ParsUser
+                    ParseUser user = new ParseUser();
+
+                    //Setting information of the user
+                    user.setUsername(username);
+                    user.setPassword(password);
+
+                    //putting the user in the database
+                    user.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            //If there is no error
+                            if(e == null) {
+                                //display toast
+                                Toast.makeText(MainActivity.this, "You can now login!", Toast.LENGTH_LONG).show();
+                            }
+
+                            else {
+                                e.printStackTrace();
+
+                                Toast.makeText(MainActivity.this, "Account not registered", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+
+                }
+
+
+
+            }
+        });
+
+        //Listener of the button to create a new user
+
 
         etUsername.setText("username1");
         etPassword.setText("password1");
