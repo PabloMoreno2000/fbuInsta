@@ -27,8 +27,8 @@ import models.Post;
 public class HomeActivity extends AppCompatActivity {
     //constants
     private final static String TAG = "HomeActivity";
-    private static final int CAMERA_REQUEST = 82301;
-    private static final int MY_CAMERA_PERMISSION_CODE = 134244;
+    private static final int CAMERA_REQUEST = 81;
+    private static final int MY_CAMERA_PERMISSION_CODE = 12;
 
     //Elements of the view
     private Button bCreate;
