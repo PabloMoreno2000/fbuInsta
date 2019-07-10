@@ -269,4 +269,29 @@ public class HomeActivity extends AppCompatActivity {
 
         return file;
     }
+
+/*    //function that updates the recycler view of the posts
+    public void updateListPosts() {
+
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        //Execute the query asynchronously
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if(e == null) {
+                    for(Post p : objects) {
+                        Log.d("loop", p.getDescription());
+                    }
+                }
+
+                else {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+    }*/
 }
