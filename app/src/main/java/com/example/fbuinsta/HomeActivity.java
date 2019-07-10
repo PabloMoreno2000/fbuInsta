@@ -26,6 +26,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 import java.util.List;
@@ -62,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
         bCreate = (Button) findViewById(R.id.bCreate);
         bPublish = (Button) findViewById(R.id.bPublish);
         etDescription = (EditText) findViewById(R.id.etDescription);
+
+        ParseUser user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
 
         //Listeners
         bCreate.setOnClickListener(new View.OnClickListener() {

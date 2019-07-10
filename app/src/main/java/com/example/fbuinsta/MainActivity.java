@@ -14,6 +14,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import org.parceler.Parcels;
+
 public class MainActivity extends AppCompatActivity {
 
     //constants
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Lead the user to the HomeActivity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    i.putExtra("user", Parcels.wrap(user));
                     startActivity(i);
 
                     //Close this activity
