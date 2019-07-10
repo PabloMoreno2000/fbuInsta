@@ -27,6 +27,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -48,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView ivTest;
 
     private Uri imageUri;
+    ParseUser user;
+
+    //boolean to avoid uploading an image from other post when you do not put another image
+    boolean bIsPosted;
 
 
     /////
@@ -66,7 +71,12 @@ public class HomeActivity extends AppCompatActivity {
         bPublish = (Button) findViewById(R.id.bPublish);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
-        ParseUser user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        //we do not have anything to post yet
+        bIsPosted = true;
+
+        //getting current loged user
+
+        user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
 
         //Listeners
@@ -96,11 +106,31 @@ public class HomeActivity extends AppCompatActivity {
                 Post post = new Post();
 
                 String description = etDescription.getText().toString();
-                File photoFile = getPhotoFileUri(photoFileName);
-                ParseFile parseFile = new ParseFile(photoFile);
+
 
                 post.setDescription(description);
-                post.setImage(parseFile);
+
+                post.setUser(user);
+
+                //if there is an image to upload
+                if(!bIsPosted) {
+                    File photoFile = getPhotoFileUri(photoFileName);
+                    ParseFile parseFile = new ParseFile(photoFile);
+                    post.setImage(parseFile);
+
+                    bIsPosted = !bIsPosted;
+                }
+
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Toast.makeText(HomeActivity.this, "Published!", Toast.LENGTH_LONG).show();
+
+                        //clean reference
+
+                    }
+                });
+
 
 
             }
@@ -233,6 +263,9 @@ public class HomeActivity extends AppCompatActivity {
 
         // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+
+        //Now we have something to post
+        bIsPosted = false;
 
         return file;
     }
