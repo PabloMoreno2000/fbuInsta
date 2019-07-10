@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Login successful");
 
                     //Lead the user to the HomeActivity
-                    Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    Intent i = new Intent(MainActivity.this, Feed.class);
                     i.putExtra("user", Parcels.wrap(user));
                     startActivity(i);
 

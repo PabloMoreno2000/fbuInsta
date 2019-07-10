@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.fbuinsta.R;
 import com.parse.Parse;
 import com.parse.ParseImageView;
@@ -48,12 +49,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
         ParseUser user = post.getUser();
 
+        //Glide.with(context).load(post.getImage().getUrl()).into(viewHolder.ivMedia);
+
         viewHolder.ivMedia.setParseFile(post.getImage());
         viewHolder.tvDescription.setText(post.getDescription());
         viewHolder.tvUser.setText(user.getUsername());
 
         viewHolder.ivComment.setImageResource(R.drawable.ufi_comment);
-        viewHolder.ivLike.setImageResource(R.drawable.ufi_comment);
+        viewHolder.ivLike.setImageResource(R.drawable.ufi_heart);
         viewHolder.ivSend.setImageResource(R.drawable.ufi_new_direct);
         viewHolder.ivSave.setImageResource(R.drawable.ufi_save);
 
