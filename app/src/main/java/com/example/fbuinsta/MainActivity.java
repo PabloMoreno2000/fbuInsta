@@ -1,6 +1,7 @@
 package com.example.fbuinsta;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     //constants
     private static final String TAG = "MainActivity";
+    private static final String PREF_NAME = "userInfo";
     private EditText etUsername;
     private EditText etPassword;
     private Button bLogin;
@@ -108,20 +110,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Listener of the button to create a new user
+        //Check if the user had a previous session
+        if(userHadSession()) {
+            SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            String username = settings.getString("username", "");
+            String password = settings.getString("password", "");
 
-
-        etUsername.setText("username1");
-        etPassword.setText("password1");
+            login(username, password);
+        }
     }
 
-    private void login(String username, String password) {
+    private void login(final String username, final String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 //if there are no errors in the log in process
                 if(e == null) {
                     Log.d(TAG, "Login successful");
+
+                    saveLoginStatus(username, password);
 
                     //Lead the user to the HomeActivity
                     Intent i = new Intent(MainActivity.this, Feed.class);
@@ -138,5 +145,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //function to allow the current signed in user to be persisted accross app restarts
+    private void saveLoginStatus(String username, String password) {
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+
+        //This means that the user has loged in
+        editor.putBoolean("isLogedIn", true);
+        editor.putString("username", username);
+        editor.putString("password", password);
+
+        //Apply the edits
+        editor.apply();
+
+    }
+
+    private boolean userHadSession() {
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        return settings.getBoolean("isLogedIn", false);
     }
 }

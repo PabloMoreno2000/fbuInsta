@@ -1,6 +1,7 @@
 package com.example.fbuinsta;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -143,6 +144,7 @@ public class Feed extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.logout:
                 ParseUser.logOut();
+                finishSession();
                 Intent i = new Intent(Feed.this, MainActivity.class);
                 startActivity(i);
                 //Toast.makeText(Feed.this, "CLICKED", Toast.LENGTH_LONG).show();
@@ -165,6 +167,23 @@ public class Feed extends AppCompatActivity {
         loadTopPosts();
 
         swipeContainer.setRefreshing(false);
+
+    }
+
+    //function to erase the userInfo from preferences
+    private void finishSession() {
+        SharedPreferences preferences= getSharedPreferences("userInfo", MODE_PRIVATE);
+
+        preferences.edit().remove("username").commit();
+        preferences.edit().remove("password").commit();
+        preferences.edit().remove("isLogedIn").commit();
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putBoolean("isLogedIn", false);
+
+        editor.apply();
+
 
     }
 
