@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import models.Post;
@@ -120,6 +121,7 @@ public class Feed extends AppCompatActivity {
 
                     adapter.clear();
                     adapter.addAll(objects);
+                    Collections.reverse(posts);
 
                 }
 

@@ -126,6 +126,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         Toast.makeText(HomeActivity.this, "Published!", Toast.LENGTH_LONG).show();
 
+                        finish();
                         //clean reference
 
                     }
