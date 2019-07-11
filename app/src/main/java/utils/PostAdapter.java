@@ -1,6 +1,8 @@
 package utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.fbuinsta.PostDetailActivity;
 import com.example.fbuinsta.R;
 import com.parse.Parse;
 import com.parse.ParseImageView;
@@ -48,6 +51,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Post post = posts.get(i);
+
+        viewHolder.post = post;
 
         ParseUser user = post.getUser();
 
@@ -91,6 +96,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         ImageView ivSave;
         TextView tvUser;
         TextView tvDescription;
+
+        Post post;
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -102,11 +111,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             ivSave = (ImageView) itemView.findViewById(R.id.ivSave);
             tvUser = (TextView) itemView.findViewById(R.id.tvUser);
             tvDescription = (TextView) itemView.findViewById(R.id.tvPostDescription);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            Intent detailIntent = new Intent(context, PostDetailActivity.class);
+            detailIntent.putExtra("username", tvUser.getText().toString());
+            detailIntent.putExtra("description", tvDescription.getText().toString());
+            detailIntent.putExtra("image", post.getImage().getUrl());
+            ((Activity)(context)).startActivity(detailIntent);
         }
     }
 }
