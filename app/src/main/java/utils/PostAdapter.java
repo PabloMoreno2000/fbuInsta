@@ -16,11 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.fbuinsta.PostDetailActivity;
 import com.example.fbuinsta.R;
-import com.parse.Parse;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -120,7 +117,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             ivSend = (ImageView) itemView.findViewById(R.id.ivSend);
             ivSave = (ImageView) itemView.findViewById(R.id.ivSave);
             tvUser = (TextView) itemView.findViewById(R.id.tvUser);
-            tvDescription = (TextView) itemView.findViewById(R.id.tvPostDescription);
+            tvDescription = (TextView) itemView.findViewById(R.id.tvDate);
 
             itemView.setOnClickListener(this);
         }
@@ -131,6 +128,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             detailIntent.putExtra("username", tvUser.getText().toString());
             detailIntent.putExtra("description", tvDescription.getText().toString());
             detailIntent.putExtra("image", post.getImage().getUrl());
+            detailIntent.putExtra("date", post.getCreatedAt().toString());
+            Log.d("adapter", post.getCreatedAt().toString());
             ((Activity)(context)).startActivity(detailIntent);
         }
     }

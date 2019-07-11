@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
-        //This means that the user has loged in
+        //This means that the user has logged in
         editor.putBoolean("isLogedIn", true);
         editor.putString("username", username);
         editor.putString("password", password);

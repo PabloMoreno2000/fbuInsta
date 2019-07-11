@@ -2,22 +2,17 @@ package com.example.fbuinsta;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
-import com.parse.ParseUser;
-
-import org.parceler.Parcels;
-
-import models.Post;
 
 public class PostDetailActivity extends AppCompatActivity {
     TextView tvName;
     TextView tvDescription;
+    TextView tvDate;
     ParseImageView ivProfile;
     ParseImageView ivPostImage;
 
@@ -25,6 +20,7 @@ public class PostDetailActivity extends AppCompatActivity {
     String photoUrl;
     String username;
     String description;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +33,12 @@ public class PostDetailActivity extends AppCompatActivity {
         photoUrl = getIntent().getExtras().getString("image");
         username = getIntent().getExtras().getString("username");
         description = getIntent().getExtras().getString("description");
+        date = "Created on: " + getIntent().getExtras().getString("date");
 
 
         tvName = (TextView) findViewById(R.id.tvName);
-        tvDescription = (TextView) findViewById(R.id.tvPostDescription);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+        tvDescription = (TextView) findViewById(R.id.tvDescription);
         ivProfile = (ParseImageView) findViewById(R.id.ivProfile);
         ivPostImage = (ParseImageView) findViewById(R.id.ivPostImage);
 
@@ -56,6 +54,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         tvName.setText(username);
         tvDescription.setText(description);
+        tvDate.setText(date);
 
 
     }
