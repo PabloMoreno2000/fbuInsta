@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -28,6 +33,8 @@ public class Feed extends AppCompatActivity {
     private ArrayList<Post> posts;
 
     private PostAdapter adapter;
+
+    private Toolbar mToolbar;
 
     private Button bCreate;
     private RecyclerView rvPosts;
@@ -54,6 +61,9 @@ public class Feed extends AppCompatActivity {
         rvPosts.setLayoutManager(linearLayoutManager);
 
         rvPosts.setAdapter(adapter);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,5 +108,37 @@ public class Feed extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mMenuInflater = getMenuInflater();
+
+        mMenuInflater.inflate(R.menu.basemenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.logout:
+                ParseUser.logOut();
+                Intent i = new Intent(Feed.this, MainActivity.class);
+                startActivity(i);
+                //Toast.makeText(Feed.this, "CLICKED", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
     }
 }
