@@ -3,6 +3,7 @@ package utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.fbuinsta.R;
 import com.parse.Parse;
 import com.parse.ParseImageView;
@@ -49,9 +51,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
         ParseUser user = post.getUser();
 
-        //Glide.with(context).load(post.getImage().getUrl()).into(viewHolder.ivMedia);
+        if(!post.getImage().getUrl().equals("")) {
+            Glide.with(context).load(post.getImage().getUrl()).into(viewHolder.ivMedia);
+            Log.i("Adapter", post.getImage().getUrl());
+            //viewHolder.ivMedia.setParseFile(post.getImage());
+        }
 
-        viewHolder.ivMedia.setParseFile(post.getImage());
+
+
         viewHolder.tvDescription.setText(post.getDescription());
         viewHolder.tvUser.setText(user.getUsername());
 
@@ -59,6 +66,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         viewHolder.ivLike.setImageResource(R.drawable.ufi_heart);
         viewHolder.ivSend.setImageResource(R.drawable.ufi_new_direct);
         viewHolder.ivSave.setImageResource(R.drawable.ufi_save);
+        //viewHolder.ivProfile.setImageResource(R.drawable.profileimage);
+
+        Glide.with(context)
+                .load(R.drawable.profileimage)
+                //.bitmapTransform(new RoundedCornersTransformation(this, 25, 0))
+                .apply(RequestOptions.circleCropTransform())
+                .into(viewHolder.ivProfile);
 
     }
 
