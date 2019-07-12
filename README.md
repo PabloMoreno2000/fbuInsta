@@ -44,7 +44,7 @@ Areas of the assignment to **discuss further with your peers** during the next c
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/PabloMoreno2000/fbuInsta/instawalk.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/PabloMoreno2000/fbuInsta/blob/master/instawalk.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
