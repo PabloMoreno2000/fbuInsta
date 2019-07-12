@@ -42,8 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 81;
     private static final int MY_CAMERA_PERMISSION_CODE = 12;
 
-    //Elements of the view
-    private Button bCreate;
+
     private Button bPublish;
     private EditText etDescription;
     private ImageView ivTest;
@@ -67,7 +66,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Initializing elements of the view
-        bCreate = (Button) findViewById(R.id.bCreate);
         bPublish = (Button) findViewById(R.id.bPublish);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
@@ -79,26 +77,6 @@ public class HomeActivity extends AppCompatActivity {
         user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
 
-        //Listeners
-        bCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //If we do not have permission for the camera
-                if(checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    //request permission from the user
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                }
-
-                //If we have permission
-                else {
-                    //Start an intent to the camera
-/*                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
-                    onLaunchCamera(v);
-
-                }
-            }
-        });
 
         bPublish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +135,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });*/
 
+
+        //If we do not have permission for the camera
+        if(checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            //request permission from the user
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+        }
+
+        //If we have permission
+        else {
+            //Start an intent to the camera
+/*                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
+            onLaunchCamera(getWindow().getDecorView().findViewById(android.R.id.content));
+
+        }
+
         loadTopPosts();
 
 
@@ -175,12 +169,14 @@ public class HomeActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Inform the user
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                onLaunchCamera(getWindow().getDecorView().findViewById(android.R.id.content));
             }
 
             //if the permission was denied
             else {
                 //Inform the user
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
 
